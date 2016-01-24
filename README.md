@@ -200,6 +200,24 @@ var lib = require('bower-files')({camelCase: false}).deps;
 lib['angular-route']; // instead of lib.angularRoute
 ```
 
+#### `options.stripExtensions` {Boolean}
+
+Default: `false`
+
+When you get a dependency hash using the `.deps`, by default it will return
+the components with their extension. However there maybe times where this isn't
+helpful. For example requirejs will append .js to each path resulting in
+`path/to/your/dependancy/file.js.js` being loaded. To prevent this from happening
+pass true to this option. Example:
+
+```javascript
+var lib = require('bower-files')({stripExtensions: true}).deps;
+
+console.log(lib['jquery']); // ['/bower_components/jquery/dist/jquery']
+
+```
+
+
 ## API
 
 Getting the files and filtering through them can be a pain without this module.

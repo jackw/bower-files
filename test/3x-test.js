@@ -26,7 +26,8 @@ describe('BowerFiles', function () {
         dir: path.resolve(FIXTURES, 'default', 'bower_components'),
         overrides: {},
         componentJson: '.bower.json',
-        camelCase: true
+        camelCase: true,
+        stripExtensions: false
       });
     });
 
@@ -48,7 +49,8 @@ describe('BowerFiles', function () {
         dir: path.resolve(FIXTURES, 'bowerrc', 'components'),
         overrides: {},
         componentJson: '.bower.json',
-        camelCase: true
+        camelCase: true,
+        stripExtensions: false
       });
     });
 
@@ -62,7 +64,8 @@ describe('BowerFiles', function () {
         dir: path.resolve(FIXTURES, 'default', 'components'),
         overrides: {},
         componentJson: '.bower.json',
-        camelCase: true
+        camelCase: true,
+        stripExtensions: false
       });
     });
 
@@ -479,6 +482,34 @@ describe('BowerFiles', function () {
         ],
         'angular-route': [
           path.join(dir, 'angular-route', 'angular-route.js')
+        ]
+      });
+    });
+
+    it('should get dependency hash without extensions in path deps', function () {
+      cd('default');
+      var files = new BowerFiles();
+      var dir = path.join(FIXTURES, 'default', 'bower_components');
+      var strap = path.join(dir, 'bootstrap');
+      var dist  = path.join(strap, 'dist');
+      expect(files.stripExtensions(true).deps).to.be.eql({
+        jquery: [
+          path.join(dir, 'jquery', 'dist', 'jquery')
+        ],
+        bootstrap: [
+          path.join(strap, 'less', 'bootstrap'),
+          path.join(dist, 'css', 'bootstrap'),
+          path.join(dist, 'js', 'bootstrap'),
+          path.join(dist, 'fonts', 'glyphicons-halflings-regular'),
+          path.join(dist, 'fonts', 'glyphicons-halflings-regular'),
+          path.join(dist, 'fonts', 'glyphicons-halflings-regular'),
+          path.join(dist, 'fonts', 'glyphicons-halflings-regular')
+        ],
+        angular: [
+          path.join(dir, 'angular', 'angular')
+        ],
+        angularRoute: [
+          path.join(dir, 'angular-route', 'angular-route')
         ]
       });
     });
